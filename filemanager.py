@@ -1,3 +1,5 @@
+import modules.function as fm
+import two_apps.bankaccount as ba
 import two_apps.victory as vg
 
 while True:
