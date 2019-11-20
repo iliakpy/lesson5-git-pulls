@@ -68,15 +68,45 @@ def list_files_and_dirs():
     print('------------------Файлы----------------------')
     list_files()
 
-def list_dirs():
-    for path in os.listdir(os.getcwd()):
-        if not os.path.isfile(path):
-            print(path)
-
 def list_files():
+    ffiles = []
     for file in os.listdir(os.getcwd()):
         if os.path.isfile(os.path.join(os.getcwd(), file)):
-            print(file)
+            ffiles.append(file)
+    return ffiles
+
+def list_dirs(*args):
+    fdirs = []
+    if args:
+        os.chdir(r"args")
+        dirs = str(os.listdir(os.getcwd()))
+        for path in os.listdir(dirs):
+            if not os.path.isfile(path):
+                fdirs.append(path)
+        return fdirs
+    for path in os.listdir(os.getcwd()):
+        if not os.path.isfile(path):
+            fdirs.append(path)
+    return fdirs
+
+def save_list_dir_and_files():
+    fdirs = []
+    for path in os.listdir(os.getcwd()):
+        if not os.path.isfile(path):
+            fdirs.append(path)
+    ffiles = []
+    for file in os.listdir(os.getcwd()):
+        if os.path.isfile(os.path.join(os.getcwd(), file)):
+            ffiles.append(file)
+
+    with open("listdir.txt", "w", encoding='utf-8') as f:
+        f.write('Директории\n')
+        for dir in fdirs:
+            f.write(dir + '\n')
+        f.write('----------------------------------\n')
+        f.write('Файлы\n')
+        for file in ffiles:
+            f.write(file + '\n')
 
 def watch_os_info():
     print("Операционная система: ", platform.system(), platform.release(), platform.machine())
