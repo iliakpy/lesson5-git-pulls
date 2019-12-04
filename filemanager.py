@@ -10,6 +10,7 @@ while True:
     print(' 2 - Удалить (файл/папку)')
     print(' 3 - Копировать (файл/папку)')
     print(' 4 - Просмотр содержимого рабочей директории')
+    print(' 41 - Сохранение содержимого рабочей директории')
     print(' 5 - Посмотреть только папки')
     print(' 6 - Посмотреть только файлы')
     print(' 7 - Просмотр информации об операционной системе')
@@ -27,6 +28,8 @@ while True:
         fm.dir_file_copy()
     elif choice == '4':
         fm.list_files_and_dirs()
+    elif choice == '41':
+        fm.save_list_dir_and_files()
     elif choice == '5':
         fm.list_dirs()
     elif choice == '6':

@@ -27,8 +27,12 @@
 При выполнении задания можно пользоваться любыми средствами
 Для реализации основного меню можно использовать пример ниже или написать свой
 """
-
+import os
+import pickle
 import modules.sfunction
+
+FILE_BALANCE = 'total_balance.log'
+FILE_HISTORY = 'purchase_history.log'
 
 def money_in(balance):
     print('Введите сумму пополнения в рублях\n')
@@ -58,9 +62,28 @@ def show_history(history):
         print('Куплено %s ---- за %s руб.\n' % (k, v))
     input('Нажмите ввод для возвращения в главное меню')
 
+def save_balance_file(balance):
+    balance_to_write = str(balance)
+    with open(FILE_BALANCE, 'w') as f:
+        f.write(balance_to_write)
+
+
+def save_history_file(history):
+    with open(FILE_HISTORY, "wb") as f:
+        pickle.dump(history, f)
+
 def balance_run():
-    balance = 0.00
-    history = {}
+    if not os.path.exists(FILE_BALANCE):
+        balance = 0.00
+    else:
+        with open(FILE_BALANCE, 'r') as f:
+            strbalance = f.read()
+            balance = float(strbalance)
+    if not os.path.exists(FILE_HISTORY):
+        history = {}
+    else:
+        with open(FILE_HISTORY, 'rb') as f:
+            history = pickle.load(f)
 
     while True:
         print('Ваш текущий баланс:%s\n' % balance)
@@ -78,6 +101,8 @@ def balance_run():
         elif choice == '3':
             show_history(history)
         elif choice == '4':
+            save_balance_file(balance)
+            save_history_file(history)
             break
         else:
             print('Неверный пункт меню')
